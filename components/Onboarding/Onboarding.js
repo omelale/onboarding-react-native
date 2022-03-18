@@ -1,6 +1,7 @@
 import React, {useRef, useState} from "react";
 import {Animated, FlatList, StyleSheet, View} from "react-native";
 import OnboardingItem from "./OnboardingItem";
+import Paginator from "./Paginator";
 import data from "../../constants/data";
 
 const Onboarding = () => {
@@ -19,7 +20,6 @@ const Onboarding = () => {
                     data={data}
                     renderItem={(item) => <OnboardingItem item={item}/>}
                     horizontal
-                    showsHorizontalScrollIndicator
                     pagingEnabled
                     bounces={false}
                     keyExtractor={(item) => item.id}
@@ -32,6 +32,7 @@ const Onboarding = () => {
                     ref={slidesRef}
                 />
             </View>
+            <Paginator data={data} scrollx={scrollX}/>
         </View>
     )
 }
