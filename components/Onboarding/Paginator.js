@@ -1,28 +1,40 @@
 import React from "react";
-import {StyleSheet,View} from "react-native";
+import {Animated, StyleSheet, useWindowDimensions, View} from "react-native";
 
-const Paginator = ({data}) => {
-    return(
+const Paginator = ({data, scrollx}) => {
+    const {width} = useWindowDimensions();
+    return (
         <View style={styles.container}>
-            {data.map((_,i)=>{
-                return <View style={[styles.dot,{width:10}]} key={i.toString()}/>
+            {data.map((_, i) => {
+                const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
+                const dotWidth = scrollx.interpolate({
+                    inputRange,
+                    outputRange: [10, 26, 10],
+                    extrapolate: 'clamp'
+                });
+                const opacity = scrollx.interpolate({
+                    inputRange,
+                    outputRange: [0.3, 1, 0.3],
+                    extrapolate: 'clamp'
+                })
+                return <Animated.View style={[styles.dot, {width: dotWidth,opacity}]} key={i.toString()}/>
             })}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flexDirection:"row",
-        height:64,
-        justifyContent:"center",
-        alignItems:'center'
+    container: {
+        flexDirection: "row",
+        height: 64,
+        justifyContent: "center",
+        alignItems: 'center'
     },
-    dot:{
-        height:10,
-        borderRadius:5,
-        backgroundColor:'#5CC562',
-        marginHorizontal:8
+    dot: {
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#5CC562',
+        marginHorizontal: 8
     }
 })
 
