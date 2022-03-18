@@ -20,6 +20,7 @@ const Onboarding = () => {
                     data={data}
                     renderItem={(item) => <OnboardingItem item={item}/>}
                     horizontal
+                    showsHorizontalScrollIndicator={false}
                     pagingEnabled
                     bounces={false}
                     keyExtractor={(item) => item.id}
